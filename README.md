@@ -49,13 +49,26 @@ The algorithm is discussed in detail by Lampen (2004).
 
 # Usage
 
-The file main.m is executable without any parameters. It prepares some
-input data, computes a ranking of the features, and then tests the
-performance of an ensemble of classifiers on feature subsets of
-increasing size in the ranked order. It is intended as an illustration
-of the use of the algorithm, not a useful utility in its own
-right. Some alternatives (e.g. using Battiti's MIFS instead of the
-proposed algorithm) are presented in comments in the sources.
+There are two main files, both executable without needing to set any
+parameters:
+
+ * `main.m` creates some synthetic input data, splits it in a 50/50
+   ratio into training and testing sets, and uses the proposed
+   algorithm to compute a ranking of the features. It then tests the
+   performance of an ensemble of classifiers on feature subsets of
+   increasing size in the ranked order.
+
+ * `main_wdbc.m` is the same as `main.m` except that it reads input
+   from a file and uses ten-fold crossvalidation for the testing. The
+   [Wisconsin Diagnostic Breast
+   Cancer](http://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/)
+   data set is the best starting point (not included in this
+   repository, so you need to get it from UCI first).
+
+Each of these is intended as an illustration of the use of the
+algorithm, not a useful utility in its own right. Some alternatives
+(e.g. using Battiti's MIFS instead of the proposed algorithm) are
+presented in comments in the sources.
 
 
 # Requirements
