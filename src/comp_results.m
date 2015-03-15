@@ -6,8 +6,8 @@ function comp_results(ranking,data,targets)
 % Note at the moment, this function simply prints out the data instead of
 % returning it.
 
-iterations=10;
-Nm=1;
+iterations=3;
+Nm=5;
 
 resmean=zeros(size(data,2)+1,1);
 ressd=zeros(size(data,2)+1,1);
@@ -15,6 +15,7 @@ for delfeat=0:size(data,2)
     fprintf('\n*** Removed features: %d of %d ***\n',delfeat,size(data,2));
     pruneddata=prune(data,ranking,delfeat);
     avgresult=zeros(1,iterations);
+    voteresult=zeros(1,iterations);
     for z=1:iterations
         fprintf('Iteration %d of %d\n',z,iterations);
         % create arrays of random values for parameters (h=learning rate,
@@ -24,10 +25,10 @@ for delfeat=0:size(data,2)
         h=rvals(0.01,0.15,Nm);
         m=rvals(0.01,0.3,Nm);
 
-        cyc=50;
-        hidden=50;
-        m=0.0005;
-        h=0.0005;
+%        cyc=50;
+%        hidden=50;
+%        m=0.0005;
+%        h=0.0005;
 
         % Initialise nets with initial weights and params.
         mnet=makemlps(size(pruneddata,2),size(targets,2),hidden);
@@ -49,6 +50,9 @@ for delfeat=0:size(data,2)
         AvgAct=mean(MLPAct,3);
         [conf,rate]=confmat(AvgAct,Ttest);
         avgresult(z)=rate(1);
+        VoteAct=vote(MLPAct);
+        [conf,rate]=confmat(VoteAct,Ttest);
+        voteresult(z)=rate(1);
     end
     resmean(delfeat+1)=mean(avgresult);
     ressd(delfeat+1)=std(avgresult);
